@@ -1,4 +1,4 @@
-FROM nginx:1.17.7-alpine AS builder
+FROM nginx:1.29.0-alpine AS builder
 
 # For latest build deps, see https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile
 RUN apk add --no-cache --virtual .build-deps \
@@ -34,7 +34,7 @@ RUN CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') \
 
 # ------------------------------------------------------------------------------------------ #
 
-FROM nginx:1.17.7-alpine
+FROM nginx:1.29.0-alpine
 
 COPY --from=builder /usr/local/nginx/modules/ngx_http_brotli_filter_module.so /usr/local/nginx/modules/ngx_http_brotli_filter_module.so
 COPY --from=builder /usr/local/nginx/modules/ngx_http_brotli_static_module.so /usr/local/nginx/modules/ngx_http_brotli_static_module.so
